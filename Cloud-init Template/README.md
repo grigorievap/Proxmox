@@ -10,14 +10,12 @@ sudo apt update -y && sudo apt install libguestfs-tools -y
 ```
 - Ставим в образ агента qemu, net-tools, bash-completion (и все что необходимо для базового образа)
 ```
-virt-customize -a focal-server-cloudimg-amd64.img --install qemu-guest-agent
-virt-customize -a focal-server-cloudimg-amd64.img --install net-tools
-virt-customize -a focal-server-cloudimg-amd64.img --install bash-completion
+sudo virt-customize -a focal-server-cloudimg-amd64.img --install "qemu-guest-agent,net-tools,bash-completion"
 ```
 - Создаем виртуальную машину с нужными нам параметрами и импортируем диск
 ```
 sudo qm create 9000 --name "ubuntu-2004-cloudinit-template" --memory 1024 --cores 1 --numa 1 --net0 virtio,bridge=vmbr0
-#sudo qm create 9000 --name "ubuntu-2004-cloudinit-template" --memory 1024 --cores 1 --numa 1 --net0 virtio,bridge=vmbr0 --sockets 1 --cpu cputype=kvm64  --kvm 1
+#sudo qm create 9000 --name "ubuntu-2004-cloudinit-template" --memory 1024 --cores 1 --numa 1 --net0 virtio,bridge=vmbr0 --sockets 1 --cpu cputype=kvm64 --kvm 1
 
 sudo qm importdisk 9000 focal-server-cloudimg-amd64.img VM
 
